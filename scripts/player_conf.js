@@ -1,5 +1,9 @@
 (function (window) {
+        var linkToFile = "https://dl.dropboxusercontent.com/u/95756758/Untitled_config.xml";
+        var xmlText = readTextFile(linkToFile);
+
         function setup(TSC) {
+             TSC.embedded_config_xml = xmlText;
              TSC.playerConfiguration.addMediaSrc("Untitled.mp4");
              TSC.playerConfiguration.setXMPSrc("Untitled_config.xml");
              
@@ -34,6 +38,25 @@
             //TSC.playerConfiguration.setForceFlashPlayer(true);
 
             TSC.mediaPlayer.init("#tscVideoContent");
+        }
+
+        function readTextFile(file)
+        {  
+           var allText = "";
+           var rawFile = new XMLHttpRequest();
+           rawFile.open("GET", file, false);
+           rawFile.onreadystatechange = function ()
+           {
+              if(rawFile.readyState === 4)
+              {
+                 if(rawFile.status === 200 || rawFile.status == 0)
+                 {
+                    allText = rawFile.responseText;
+                 }
+              }
+           }
+           rawFile.send(null);
+           return allText;
         }
 
         function loadScript(e,t){if(!e||!(typeof e==="string")){return}var n=document.createElement("script");if(typeof document.attachEvent==="object"){n.onreadystatechange=function(){if(n.readyState==="loaded"){if(t){t()}}}}else{n.onload=function(){if(t){t()}}}n.src=e;document.getElementsByTagName("head")[0].appendChild(n)}
